@@ -125,7 +125,18 @@ const Home: NextPage = () => {
 			>
 				<Space sx={{height: '5vh'}} />
 				<Stack sx={{gap: 0}} align="center" className="parent" mb={30}>
-					<Text sx={{fontSize: 99, textAlign: 'center', zIndex: 999}}>
+					<Text
+						sx={{
+							fontSize: 99,
+							textAlign: 'center',
+							zIndex: 999,
+							isolation: 'isolate',
+							['-webkit-transform']: 'translate3d(0,0,0)',
+							['-webkit-perspective']: '1000',
+							['-webkit-backface-visibility']: 'hidden',
+							['-webkit-transform-style']: 'preserve-3d'
+						}}
+					>
 						🧙
 					</Text>
 					<Paper
@@ -134,7 +145,8 @@ const Home: NextPage = () => {
 						sx={{
 							borderColor: 'rgba(0, 0, 0, 0.16)',
 							borderRadius: 13,
-							padding: '5px 15px'
+							padding: '5px 15px',
+							isolation: 'isolate'
 						}}
 						mt={-27}
 						pl={15}
@@ -163,9 +175,10 @@ const Home: NextPage = () => {
 									size={20}
 									color="green"
 									sx={{
-										visibility: isLoading
-											? 'visible'
-											: 'hidden'
+										visibility:
+											isLoading || true
+												? 'visible'
+												: 'hidden'
 									}}
 								/>
 							</Box>
@@ -197,16 +210,6 @@ const Home: NextPage = () => {
 							/>
 						</Group>
 					</Paper>
-					<ActionIcon
-						mt={-12}
-						variant="filled"
-						radius="xl"
-						size="sm"
-						color="gray"
-						className="showOnParentHover"
-					>
-						<IconPlus />
-					</ActionIcon>
 				</Stack>
 				{result && (
 					<Box sx={{width: 600, position: 'relative'}} mt={15}>
