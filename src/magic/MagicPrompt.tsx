@@ -245,7 +245,6 @@ export const MagicPrompt = ({
 				sx={{fontSize: 12}}
 				openDelay={250}
 				transition="pop"
-				offset={-10}
 				withArrow
 			>
 				<Box>
