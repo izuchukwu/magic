@@ -33,7 +33,7 @@ html {
 /* Show on Parent Hover */
 
 .parent:hover .showOnParentHover {
-	opacity: 1;
+	opacity: var(--parent-hover-opacity, 1);
 }
 
 .showOnParentHover {
