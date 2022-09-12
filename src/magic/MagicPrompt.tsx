@@ -231,48 +231,51 @@ export const MagicPrompt = ({
 				</Collapse>
 			</Paper>
 
-			<Tooltip
-				label={
-					<Text align="center" sx={{lineHeight: 1.2}}>
-						<b>Add another request</b>
-						<br />
-						{" that uses this one's results"}
-					</Text>
-				}
-				position="bottom"
-				radius="md"
-				color="dark"
-				sx={{fontSize: 12}}
-				openDelay={250}
-				transition="pop"
-				withArrow
-			>
-				<Box>
-					{/* This Box makes the tooltip work, because of the media query */}
-					<MediaQuery
-						query="(hover: none)"
-						styles={{
-							opacity: 'var(--parent-hover-opacity) !important'
-						}}
-					>
-						<ActionIcon
-							mt={-12}
-							ml={'0.5px'}
-							variant="filled"
-							radius="xl"
-							size="sm"
-							color="gray"
-							sx={{
-								zIndex: 999
+			{result && (
+				<Tooltip
+					label={
+						<Text align="center" sx={{lineHeight: 1.2}}>
+							<b>Add another request</b>
+							<br />
+							{" that uses this one's results"}
+						</Text>
+					}
+					position="bottom"
+					radius="md"
+					color="dark"
+					sx={{fontSize: 12}}
+					openDelay={250}
+					transition="pop"
+					withArrow
+				>
+					<Box>
+						{/* This Box makes the tooltip work, because of the media query */}
+						<MediaQuery
+							query="(hover: none)"
+							styles={{
+								opacity:
+									'var(--parent-hover-opacity) !important'
 							}}
-							onClick={onAddPrompt}
-							className="showOnParentHover"
 						>
-							<IconPlus />
-						</ActionIcon>
-					</MediaQuery>
-				</Box>
-			</Tooltip>
+							<ActionIcon
+								mt={-12}
+								ml={'0.5px'}
+								variant="filled"
+								radius="xl"
+								size="sm"
+								color="gray"
+								sx={{
+									zIndex: 999
+								}}
+								onClick={onAddPrompt}
+								className="showOnParentHover"
+							>
+								<IconPlus />
+							</ActionIcon>
+						</MediaQuery>
+					</Box>
+				</Tooltip>
+			)}
 		</Stack>
 	)
 }
