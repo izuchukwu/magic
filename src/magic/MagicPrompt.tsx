@@ -10,14 +10,16 @@ import {
 	Textarea,
 	Timeline,
 	Text,
-	MediaQuery
+	MediaQuery,
+	Tooltip
 } from '@mantine/core'
 import {
 	IconChevronRight,
 	IconChevronDown,
 	IconPencil,
 	IconPlus,
-	IconBrandTwitter
+	IconBrandTwitter,
+	IconTrash
 } from '@tabler/icons'
 import {decode} from 'html-entities'
 import {useState, useCallback, useEffect} from 'react'
@@ -152,7 +154,28 @@ export const MagicPrompt = ({
 						/>
 					</Box>
 				</Group>
-				<Group sx={{width: '100%'}} pb={5} position="right">
+				<Group
+					sx={{width: '100%'}}
+					pb={5}
+					position="right"
+					align="center"
+				>
+					{index > 0 && (
+						<ActionIcon
+							mt={0}
+							variant="subtle"
+							radius="sm"
+							size="sm"
+							color="gray"
+							className="showOnParentHover"
+							sx={{
+								zIndex: 199,
+								marginTop: 20
+							}}
+						>
+							<IconTrash size={19} />
+						</ActionIcon>
+					)}
 					<Autocomplete
 						data={['Answer', 'Article', 'Tweet Thread', 'JSON']}
 						filter={() => true}
@@ -169,7 +192,6 @@ export const MagicPrompt = ({
 							rightSection: {pointerEvents: 'none'}
 						}}
 						icon={<IconPencil size={15} />}
-						mt={10}
 						onChange={setFormat}
 						disabled={isLoading}
 					/>
@@ -213,28 +235,50 @@ export const MagicPrompt = ({
 					</Box>
 				</MediaQuery>
 			)}
-			<MediaQuery
-				query="hover: none"
-				styles={{opacity: 'var(--parent-hover-opacity) !important'}}
+			<Tooltip
+				label={
+					<Text align="center" sx={{lineHeight: 1.2}}>
+						<b>Add another question</b>
+						<br />
+						{" that uses this one's results"}
+					</Text>
+				}
+				position="bottom"
+				radius="md"
+				color="gray"
+				sx={{fontSize: 12}}
+				openDelay={250}
+				transition="pop"
+				offset={-10}
+				withArrow
 			>
-				<ActionIcon
-					mt={0}
-					mb={15}
-					variant="filled"
-					radius="xl"
-					size="sm"
-					color="gray"
-					className="showOnParentHover"
-					sx={{
-						zIndex: 199,
-						marginTop: 20,
-						['--parent-hover-opacity']: 0.65
-					}}
-					onClick={onAddPrompt}
-				>
-					<IconPlus />
-				</ActionIcon>
-			</MediaQuery>
+				<Box>
+					<MediaQuery
+						query="(hover: none)"
+						styles={{
+							opacity: 'var(--parent-hover-opacity) !important'
+						}}
+					>
+						<ActionIcon
+							mt={0}
+							mb={15}
+							variant="filled"
+							radius="xl"
+							size="sm"
+							color="gray"
+							sx={{
+								zIndex: 199,
+								marginTop: 20,
+								['--parent-hover-opacity']: 0.65
+							}}
+							onClick={onAddPrompt}
+							className="showOnParentHover"
+						>
+							<IconPlus />
+						</ActionIcon>
+					</MediaQuery>
+				</Box>
+			</Tooltip>
 		</Stack>
 	)
 }
