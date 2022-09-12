@@ -175,10 +175,9 @@ const Home: NextPage = () => {
 									size={20}
 									color="green"
 									sx={{
-										visibility:
-											isLoading || true
-												? 'visible'
-												: 'hidden'
+										visibility: isLoading
+											? 'visible'
+											: 'hidden'
 									}}
 								/>
 							</Box>
