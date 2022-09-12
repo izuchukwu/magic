@@ -248,28 +248,31 @@ export const MagicPrompt = ({
 				offset={-10}
 				withArrow
 			>
-				<MediaQuery
-					query="(hover: none)"
-					styles={{
-						opacity: 'var(--parent-hover-opacity) !important'
-					}}
-				>
-					<ActionIcon
-						mt={-12}
-						ml={'0.5px'}
-						variant="filled"
-						radius="xl"
-						size="sm"
-						color="gray"
-						sx={{
-							zIndex: 999
+				<Box>
+					{/* This Box makes the tooltip work, because of the media query */}
+					<MediaQuery
+						query="(hover: none)"
+						styles={{
+							opacity: 'var(--parent-hover-opacity) !important'
 						}}
-						onClick={onAddPrompt}
-						className="showOnParentHover"
 					>
-						<IconPlus />
-					</ActionIcon>
-				</MediaQuery>
+						<ActionIcon
+							mt={-12}
+							ml={'0.5px'}
+							variant="filled"
+							radius="xl"
+							size="sm"
+							color="gray"
+							sx={{
+								zIndex: 999
+							}}
+							onClick={onAddPrompt}
+							className="showOnParentHover"
+						>
+							<IconPlus />
+						</ActionIcon>
+					</MediaQuery>
+				</Box>
 			</Tooltip>
 		</Stack>
 	)
@@ -298,7 +301,7 @@ const ResultsSection = ({result, format, isLoading}: ResultsSectionProps) => {
 						smallerThan={'sm'}
 						styles={{width: 500, maxWidth: '70vw'}}
 					>
-						<Box sx={{position: 'relative', width: 600}} p={10}>
+						<Box sx={{position: 'relative', width: 600}} p={15}>
 							{format === 'Answer' &&
 								result
 									.split('\n')
