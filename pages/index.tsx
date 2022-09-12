@@ -50,7 +50,7 @@ const Home: NextPage = () => {
 				justify="start"
 			>
 				<Space sx={{height: '5vh'}} />
-				<Stack sx={{gap: 0}} align="center" className="parent" mb={30}>
+				<Stack sx={{gap: 0}} align="center" mb={30}>
 					<MediaQuery smallerThan={'sm'} styles={{fontSize: 69}}>
 						<Text
 							sx={{
@@ -79,6 +79,7 @@ const Home: NextPage = () => {
 										setPrompts([...prompts])
 									}}
 									onCompletionSelect={(completion) => {
+										if (!prompts[i]) return
 										prompts[i].completion = completion
 										setPrompts([...prompts])
 									}}
@@ -87,6 +88,10 @@ const Home: NextPage = () => {
 											? prompts[i - 1].completion
 											: undefined
 									}
+									onDeletePrompt={() => {
+										prompts.splice(i, 1)
+										setPrompts([...prompts])
+									}}
 								/>
 							))}
 						</Stack>
