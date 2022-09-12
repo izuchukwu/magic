@@ -62,21 +62,17 @@ export const MagicPrompt = ({
 	const paperRef = useRef() as MutableRefObject<HTMLDivElement>
 	const [isFocused, setFocused] = useState(false)
 
-	/** Updates prompt while typing */
-	const onChange = useCallback(
-		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			setPrompt(e.currentTarget.value)
-		},
-		[]
-	)
-
 	/** Asks EP the prompt */
-	const onAsk = useCallback(() => {
-		if (!prompt) return
-		runWithVariables({
-			prompt: promptForFormat(prompt, format, lastCompletion)
-		})
-	}, [prompt, runWithVariables, format, lastCompletion])
+	const onAsk = useCallback(
+		(newFormat: string, deleteCurrentResult?: boolean) => {
+			if (!prompt) return
+			runWithVariables({
+				prompt: promptForFormat(prompt, newFormat, lastCompletion)
+			})
+			if (deleteCurrentResult) setResult('')
+		},
+		[prompt, runWithVariables, lastCompletion]
+	)
 
 	/** Calls onAsk on Return */
 	const onReturn = useCallback(
@@ -94,10 +90,10 @@ export const MagicPrompt = ({
 			// If not, ask EP
 			if (!event.shiftKey) {
 				event.preventDefault()
-				onAsk()
+				onAsk(format)
 			}
 		},
-		[onAsk, prompt]
+		[format, onAsk, prompt]
 	)
 
 	/** Sets result when completion returns */
@@ -159,7 +155,9 @@ export const MagicPrompt = ({
 								}
 								variant="unstyled"
 								onKeyDown={onReturn}
-								onChange={onChange}
+								onChange={(e) =>
+									setPrompt(e.currentTarget.value)
+								}
 								value={prompt}
 								ref={fieldRef}
 								onFocus={() => setFocused(true)}
@@ -213,9 +211,9 @@ export const MagicPrompt = ({
 							icon={<IconPencil size={15} />}
 							onChange={(e) => {
 								const newFormat = e.currentTarget.value
-								if (newFormat !== format) setResult('')
-								setFormat(e.currentTarget.value)
-								onAsk()
+								if (newFormat === format) return
+								setFormat(newFormat)
+								onAsk(newFormat, true)
 							}}
 							disabled={isLoading}
 						/>
@@ -305,7 +303,7 @@ const ResultsSection = ({result, format, isLoading}: ResultsSectionProps) => {
 								result
 									.split('\n')
 									.map((paragraph, i, paragraphs) => (
-										<Text key={i}>
+										<Text key={i} sx={{opacity: 0.8}}>
 											{paragraph}
 											{i < paragraphs.length - 1 && (
 												<br />
