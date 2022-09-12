@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 			<Script
 				async
 				src="https://www.googletagmanager.com/gtag/js?id=G-Z0VGQP574V"
-			></Script>
+			/>
 			<Script id="google-">
 				{`window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
