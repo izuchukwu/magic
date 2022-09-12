@@ -1,26 +1,57 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	padding: 0;
+	margin: 0;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+/* Inter */
+@import url('https://rsms.me/inter/inter.css');
+html {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+		Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+		sans-serif;
+}
+@supports (font-variation-settings: normal) {
+	html {
+		font-family: 'Inter var', -apple-system, BlinkMacSystemFont, Segoe UI,
+			Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+			Helvetica Neue, sans-serif;
+	}
+}
+
+/* Show on Parent Hover */
+
+.parent:hover .showOnParentHover {
+	opacity: 1;
+}
+
+.showOnParentHover {
+	opacity: 0;
+	transition: opacity 0.15s;
+}
+
+/* Tiptap */
+
+/* Hide focus rings on content-editables (TipTap) */
+[contenteditable]:focus {
+	outline: 0px solid transparent;
+}
+
+.TipTap h1 {
+	margin-block-start: 0rem;
+}
+
+.TipTap p {
+	line-height: 155%;
 }
