@@ -9,7 +9,8 @@ import {
 	Stack,
 	Textarea,
 	Timeline,
-	Text
+	Text,
+	MediaQuery
 } from '@mantine/core'
 import {
 	IconChevronRight,
@@ -121,21 +122,26 @@ export const MagicPrompt = ({
 							color="rgba(0, 0, 0, 0.5)"
 						/>
 					</Box>
-					<Textarea
-						autoFocus
-						autosize={true}
-						size="lg"
-						sx={{width: 600}}
-						placeholder={
-							index
-								? 'Ask for changes to the result, like "summarize this" or "expand on the first section"'
-								: 'Ask Magic Anything'
-						}
-						variant="unstyled"
-						onKeyDown={onReturn}
-						onChange={onChange}
-						value={prompt}
-					/>
+					<MediaQuery
+						smallerThan={'sm'}
+						styles={{width: 500, maxWidth: '70vw'}}
+					>
+						<Textarea
+							autoFocus
+							autosize={true}
+							size="lg"
+							sx={{width: 600}}
+							placeholder={
+								index
+									? 'Ask for changes to the result, like "summarize this" or "expand on the first section"'
+									: 'Ask Magic Anything'
+							}
+							variant="unstyled"
+							onKeyDown={onReturn}
+							onChange={onChange}
+							value={prompt}
+						/>
+					</MediaQuery>
 					<Box mt={13} pr={5}>
 						<Loader
 							size={20}
@@ -170,53 +176,65 @@ export const MagicPrompt = ({
 				</Group>
 			</Paper>
 			{result && (
-				<Box sx={{width: 600, position: 'relative'}} mt={15}>
-					{format === 'Article' && <Tiptap content={result} />}
-					{format === 'Tweet Thread' && (
-						<Timeline bulletSize={24} lineWidth={2}>
-							{result
-								.trim()
-								.split('\n')
-								.map((tweet, i) => (
-									<Timeline.Item
-										bullet={<IconBrandTwitter size={12} />}
-										key={i}
-									>
-										<Text>{tweet}</Text>
-									</Timeline.Item>
-								))}
-						</Timeline>
-					)}
-					{format === 'JSON' && (
-						<JsonInput
-							value={result}
-							minRows={4}
-							variant="unstyled"
-							autosize
-						/>
-					)}
-					{!['Article', 'Tweet Thread', 'JSON'].includes(format) && (
-						<Text>{result}</Text>
-					)}
-				</Box>
+				<MediaQuery
+					smallerThan={'sm'}
+					styles={{width: 500, maxWidth: '70vw'}}
+				>
+					<Box sx={{width: 600, position: 'relative'}} mt={15}>
+						{format === 'Article' && <Tiptap content={result} />}
+						{format === 'Tweet Thread' && (
+							<Timeline bulletSize={24} lineWidth={2}>
+								{result
+									.trim()
+									.split('\n')
+									.map((tweet, i) => (
+										<Timeline.Item
+											bullet={
+												<IconBrandTwitter size={12} />
+											}
+											key={i}
+										>
+											<Text>{tweet}</Text>
+										</Timeline.Item>
+									))}
+							</Timeline>
+						)}
+						{format === 'JSON' && (
+							<JsonInput
+								value={result}
+								minRows={4}
+								variant="unstyled"
+								autosize
+							/>
+						)}
+						{!['Article', 'Tweet Thread', 'JSON'].includes(
+							format
+						) && <Text>{result}</Text>}
+					</Box>
+				</MediaQuery>
 			)}
-			<ActionIcon
-				mt={0}
-				mb={15}
-				variant="filled"
-				radius="xl"
-				size="sm"
-				color="gray"
-				className="showOnParentHover"
-				sx={{
-					zIndex: 199,
-					marginTop: 20,
-					['--parent-hover-opacity']: 0.65
-				}}
-				onClick={onAddPrompt}
+			<MediaQuery
+				query="hover: none"
+				styles={{opacity: 'var(--parent-hover-opacity) !important'}}
 			>
-				<IconPlus />
-			</ActionIcon>
+				<ActionIcon
+					mt={0}
+					mb={15}
+					variant="filled"
+					radius="xl"
+					size="sm"
+					color="gray"
+					className="showOnParentHover"
+					sx={{
+						zIndex: 199,
+						marginTop: 20,
+						['--parent-hover-opacity']: 0.65
+					}}
+					onClick={onAddPrompt}
+				>
+					<IconPlus />
+				</ActionIcon>
+			</MediaQuery>
 		</Stack>
 	)
 }
