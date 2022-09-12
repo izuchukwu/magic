@@ -146,7 +146,8 @@ const Home: NextPage = () => {
 							borderColor: 'rgba(0, 0, 0, 0.16)',
 							borderRadius: 13,
 							padding: '5px 15px',
-							isolation: 'isolate'
+							isolation: 'isolate',
+							zIndex: 999
 						}}
 						mt={-27}
 						pl={15}
@@ -231,7 +232,12 @@ const Home: NextPage = () => {
 							</Timeline>
 						)}
 						{format === 'JSON' && (
-							<JsonInput value={result} sx={{height: 300}} />
+							<JsonInput
+								value={result}
+								minRows={4}
+								variant="unstyled"
+								autosize
+							/>
 						)}
 						{!['Article', 'Tweet Thread', 'JSON'].includes(
 							format
